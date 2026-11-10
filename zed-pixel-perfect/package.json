@@ -1,0 +1,24 @@
+{
+  "name": "zed-pixel-perfect",
+  "version": "1.0.0",
+  "description": "100% pixel-identical replica of Zed.dev landing page and design system via REA",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "zed",
+    "rea",
+    "pixel-perfect",
+    "design-system",
+    "tokens"
+  ],
+  "author": "Antigravity",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}
+

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zed Design System — Living Styleguide & Token Explorer</title>
+  
+  <!-- Tailwind CSS CDN for instant styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"IBM Plex Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"Zed Mono"', '"JetBrains Mono"', 'Menlo', 'monospace'],
+            serif: ['"IBM Plex Serif"', 'serif'],
+          },
+          colors: {
+            zed: {
+              accent: '#5c78e2',
+              'accent-cyan': '#6eb4bf',
+              'accent-purple': '#b477cf',
+              'accent-green': '#a1c181',
+              'accent-amber': '#dec184',
+              'accent-red': '#d07277',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Zed Design System Tokens & Components -->
+
+  <style>
+    /* Custom scrollbar matching Zed */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-background); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover_background); }
+  </style>
+  <script type="module" crossorigin src="/assets/designSystem-C30yimOi.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/designSystem-CzD_oUSt.css">
+</head>
+<body class="bg-[var(--background)] text-[var(--text)] font-sans antialiased min-h-screen transition-colors duration-200">
+
+  <!-- Notification Toast for Copied Tokens -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[var(--surface-background)] border border-[var(--border-focused)] text-[var(--text)] px-4 py-2.5 rounded-lg shadow-xl text-sm flex items-center gap-2 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-200">
+    <i data-lucide="check" class="w-4 h-4 text-emerald-500"></i>
+    <span id="toast-msg">Copied token to clipboard!</span>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-[var(--surface-background)]/90 backdrop-blur-md border-b border-[var(--border)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <img src="data:image/svg+xml,%3csvg%20width='95'%20height='32'%20viewBox='0%200%2095%2032'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%20class='w-auto%20h-[23px]'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M2.93144%201.95429C2.39177%201.95429%201.95429%202.39177%201.95429%202.93144V24.4286H0V2.93144C0%201.31245%201.31245%200%202.93144%200H29.112C30.4178%200%2031.0718%201.57879%2030.1484%202.50214L14.0237%2018.6268H18.5658V16.6115H20.5201V19.1154C20.5201%2019.9249%2019.8638%2020.5811%2019.0543%2020.5811H12.0694L8.71049%2023.9401H23.9401V11.7257H25.8944V23.9401C25.8944%2025.0194%2025.0194%2025.8944%2023.9401%2025.8944H6.7562L3.33618%2029.3144H28.3372C28.8769%2029.3144%2029.3144%2028.8769%2029.3144%2028.3372V6.84002H31.2687V28.3372C31.2687%2029.9562%2029.9562%2031.2687%2028.3372%2031.2687H2.15667C0.850848%2031.2687%200.196896%2029.6899%201.12024%2028.7665L17.1839%2012.7029H12.7029V14.6572H10.7486V12.2143C10.7486%2011.4048%2011.4048%2010.7486%2012.2143%2010.7486H19.1382L22.5582%207.32859H7.32859V19.5429H5.3743V7.32859C5.3743%206.24927%206.24927%205.3743%207.32859%205.3743H24.5125L27.9325%201.95429H2.93144Z'%20class='fill-accent-blue%20dark:fill-[color-mix(in_oklch,var(--color-accent-blue)_80%25,white)]'%3e%3c/path%3e%3cpath%20d='M92.454%2022.9431C92.454%2023.2044%2092.6658%2023.4162%2092.9271%2023.4162H94.384C94.6453%2023.4162%2094.8571%2023.628%2094.8571%2023.8893V25.3755C94.8571%2025.6368%2094.6453%2025.8486%2094.384%2025.8486H90.0551C89.7938%2025.8486%2089.582%2025.6368%2089.582%2025.3755V25.1913C89.582%2024.7066%2088.8297%2024.4659%2088.4665%2024.7869C87.3853%2025.7424%2085.8983%2026.2882%2084.1311%2026.2882C80.0283%2026.2882%2077.0098%2023.1524%2077.0098%2018.1704C77.0098%2013.1298%2080.0576%209.96477%2084.1897%209.96477C85.8979%209.96477%2087.3987%2010.5232%2088.5273%2011.5576C88.8785%2011.8794%2089.582%2011.6501%2089.582%2011.1737V6.77462C89.582%206.51334%2089.3702%206.30153%2089.1089%206.30153H85.7764C85.5151%206.30153%2085.3033%206.08972%2085.3033%205.82845V4.34223C85.3033%204.08095%2085.5151%203.86914%2085.7764%203.86914H91.9809C92.2422%203.86914%2092.454%204.08095%2092.454%204.34223V22.9431ZM84.8638%2023.6799C87.6771%2023.6799%2089.582%2021.3648%2089.582%2018.0825C89.582%2014.7416%2087.7357%2012.573%2084.8638%2012.573C82.0211%2012.573%2080.1748%2014.7709%2080.1748%2018.1118C80.1748%2021.3941%2082.0797%2023.6799%2084.8638%2023.6799Z'%20class='fill-offgray-1000%20dark:fill-white'%3e%3c/path%3e%3cpath%20d='M67.3121%2026.3175C62.2714%2026.3175%2059.2236%2023.0646%2059.2236%2018.2291C59.2236%2013.6574%2062.2714%209.96484%2067.2535%209.96484C72.0889%209.96484%2074.9316%2013.4522%2074.9316%2017.9947V18.3714C74.9316%2018.6327%2074.7198%2018.8445%2074.4585%2018.8445H62.8C62.5287%2018.8445%2062.3111%2019.0727%2062.3475%2019.3415C62.6831%2021.8156%2064.5057%2023.6214%2067.2828%2023.6214C69.6852%2023.6214%2071.0449%2022.4769%2071.5988%2020.9462C71.6712%2020.7461%2071.8554%2020.6029%2072.0682%2020.6029H74.3363C74.6312%2020.6029%2074.8552%2020.8703%2074.7817%2021.1559C74.0166%2024.1308%2071.5104%2026.3175%2067.3121%2026.3175ZM62.547%2015.8369C62.4621%2016.1177%2062.686%2016.3828%2062.9793%2016.3828H71.2105C71.4918%2016.3828%2071.713%2016.1377%2071.6476%2015.8641C71.2387%2014.1516%2069.7251%2012.6024%2067.1948%2012.6024C64.5755%2012.6024%2063.055%2014.155%2062.547%2015.8369Z'%20class='fill-offgray-1000%20dark:fill-white'%3e%3c/path%3e%3cpath%20d='M54.0124%2023.2985C54.2737%2023.2985%2054.4855%2023.0867%2054.4855%2022.8254V18.2621C54.4855%2018.0008%2054.6973%2017.789%2054.9586%2017.789H56.7086C56.9699%2017.789%2057.1817%2018.0008%2057.1817%2018.2621V25.375C57.1817%2025.6363%2056.9699%2025.8481%2056.7086%2025.8481H41.7416C41.4804%2025.8481%2041.2686%2025.6363%2041.2686%2025.375V23.4295C41.2686%2023.3255%2041.3028%2023.2245%2041.366%2023.1419L52.4671%208.6443C52.7054%208.33304%2052.4835%207.8836%2052.0914%207.8836H44.7015C44.4403%207.8836%2044.2285%208.09541%2044.2285%208.35668V12.0995C44.2285%2012.3607%2044.0166%2012.5725%2043.7554%2012.5725H42.0054C41.7441%2012.5725%2041.5323%2012.3607%2041.5323%2012.0995V5.80707C41.5323%205.54579%2041.7441%205.33398%2042.0054%205.33398H56.2104C56.4717%205.33398%2056.6835%205.54579%2056.6835%205.80707V7.75163C56.6835%207.85619%2056.6488%207.95781%2056.585%208.0406L45.4024%2022.5365C45.1625%2022.8475%2045.3842%2023.2985%2045.777%2023.2985H54.0124Z'%20class='fill-offgray-1000%20dark:fill-white'%3e%3c/path%3e%3c/svg%3e" alt="Zed Logo" class="h-6 w-auto dark:invert-0 invert">
+        </a>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--element-background)] border border-[var(--border)] text-[var(--text-muted)] font-mono">Design System v1.0</span>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#colors" class="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">Colors & Surfaces</a>
+        <a href="#typography" class="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">Typography</a>
+        <a href="#components" class="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">Components</a>
+        <a href="#editor" class="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">Code Editor</a>
+        <a href="#multiplayer" class="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">Multiplayer</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="zen-btn zen-btn-secondary zen-btn-sm" title="Toggle theme (Hotkey: T)">
+          <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+          <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
+          <span class="text-xs">Theme</span>
+          <kbd class="zen-kbd">T</kbd>
+        </button>
+
+        <a href="index.html" class="zen-btn zen-btn-primary zen-btn-sm">
+          <span>View Landing Page</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 border-b border-[var(--border-variant)]">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div>
+        <h1 class="text-3xl md:text-5xl font-medium tracking-tight mb-3">Zed Design System</h1>
+        <p class="text-[var(--text-muted)] text-base max-w-2xl leading-relaxed">
+          The complete, high-fidelity token library and component specification extracted directly from 
+          <a href="https://zed.dev" target="_blank" class="text-[var(--text-accent)] underline underline-offset-4">zed.dev</a>. 
+          Engineered for developer tools, dark-mode interfaces, and high-density productivity applications.
+        </p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <a href="./design-system/tokens.json" download class="zen-btn zen-btn-secondary zen-btn-sm">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span>tokens.json</span>
+        </a>
+        <a href="./design-system/tokens.css" download class="zen-btn zen-btn-secondary zen-btn-sm">
+          <i data-lucide="code" class="w-3.5 h-3.5"></i>
+          <span>tokens.css</span>
+        </a>
+        <a href="./design-system/tokens.ts" download class="zen-btn zen-btn-secondary zen-btn-sm">
+          <i data-lucide="file-code" class="w-3.5 h-3.5"></i>
+          <span>tokens.ts</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+    <!-- 1. COLOR TOKENS & SURFACES -->
+    <section id="colors" class="space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-medium tracking-tight">Surfaces & Primary Palette</h2>
+          <p class="text-sm text-[var(--text-muted)] mt-1">Click any color card to copy its CSS variable name or hex value.</p>
+        </div>
+      </div>
+
+      <!-- Surface grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+        <div class="color-card zen-card p-3 cursor-pointer group" data-var="--background" data-value="#3b414d">
+          <div class="h-14 rounded-md border border-[var(--border)] mb-2 shadow-inner" style="background-color: var(--background);"></div>
+          <div class="text-xs font-mono font-medium truncate">--background</div>
+          <div class="text-[10px] text-[var(--text-muted)] font-mono">App Canvas</div>
+        </div>
+
+        <div class="color-card zen-card p-3 cursor-pointer group" data-var="--surface-background" data-value="#2f343e">
+          <div class="h-14 rounded-md border border-[var(--border)] mb-2 shadow-inner" style="background-color: var(--surface-background);"></div>
+          <div class="text-xs font-mono font-medium truncate">--surface-bg</div>
+          <div class="text-[10px] text-[var(--text-muted)] font-mono">Panels & Cards</div>
+        </div>
+
+        <div class="color-card zen-card p-3 cursor-pointer group" data-var="--editor-background" data-value="#282c33">
+          <div class="h-14 rounded-md border border-[var(--border)] mb-2 shadow-inner" style="background-color: var(--editor-background);"></div>
+          <div class="text-xs font-mono font-medium truncate">--editor-bg</div>
+          <div class="text-[10px] text-[var(--text-muted)] font-mono">Editor Canvas</div>
+        </div>
+
+        <div class="color-card zen-card p-3 cursor-pointer group" data-var="--element-background" data-value="#2e343e">
+          <div class="h-14 rounded-md border border-[var(--border)] mb-2 shadow-inner" style="background-color: var(--element-background);"></div>
+          <div class="text-xs font-mono font-medium truncate">--element-bg</div>
+          <div class="text-[10px] text-[var(--text-muted)] font-mono">Controls / Inputs</div>
+        </div>
+
+        <div class="color-card zen-card p-3 cursor-pointer group" data-var="--element-hover" data-value="#363c46">
+          <div class="h-14 rounded-md border border-[var(--border)] mb-2 shadow-inner" style="background-color: var(--element-hover);"></div>
+          <div class="text-xs font-mono font-medium truncate">--element-hover</div>
+          <div class="text-[10px] text-[var(--text-muted)] font-mono">Hover State</div>
+        </div>
+
+        <div class="color-card zen-card p-3 cursor-pointer group" data-var="--border" data-value="#464b57">
+          <div class="h-14 rounded-md border border-[var(--border)] mb-2 shadow-inner flex items-center justify-center" style="background-color: var(--border);"></div>
+          <div class="text-xs font-mono font-medium truncate">--border</div>
+          <div class="text-[10px] text-[var(--text-muted)] font-mono">Dividers / Lines</div>
+        </div>
+      </div>
+
+      <!-- Semantic Accents -->
+      <h3 class="text-base font-medium mt-6 mb-3">Semantic & Accent Colors</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+        <div class="color-card zen-card p-3 cursor-pointer group" data-var="--text-accent" data-value="#74ade8">
+          <div class="h-12 rounded-md mb-2 shadow-inner" style="background-color: var(--text-accent);"></div>
+          <div class="text-xs font-mono font-medium truncate">--text-accent</div>
+          <div class="text-[10px] text-[var(--text-muted)] font-mono">Accent Blue</div>
+        </div>
+
+        <div class="color-card zen-card p-3 cursor-pointer group" data-var="--success" data-value="#a1c181">
+          <div class="h-12 rounded-md mb-2 shadow-inner" style="background-color: var(--success);"></div>
+          <div class="text-xs font-mono font-medium truncate">--success</div>
+          <div class="text-[10px] text-[var(--text-muted)] font-mono">Created / Green</div>
+        </div>
+
+        <div class="color-card zen-card p-3 cursor-pointer group" data-var="--warning" data-value="#dec184">
+          <div class="h-12 rounded-md mb-2 shadow-inner" style="background-color: var(--warning);"></div>
+          <div class="text-xs font-mono font-medium truncate">--warning</div>
+          <div class="text-[10px] text-[var(--text-muted)] font-mono">Modified / Amber</div>
+        </div>
+
+        <div class="color-card zen-card p-3 cursor-pointer group" data-var="--error" data-value="#d07277">
+          <div class="h-12 rounded-md mb-2 shadow-inner" style="background-color: var(--error);"></div>
+          <div class="text-xs font-mono font-medium truncate">--error</div>
+          <div class="text-[10px] text-[var(--text-muted)] font-mono">Deleted / Coral</div>
+        </div>
+
+        <div class="color-card zen-card p-3 cursor-pointer group" data-var="--hint" data-value="#788ca6">
+          <div class="h-12 rounded-md mb-2 shadow-inner" style="background-color: var(--hint);"></div>
+          <div class="text-xs font-mono font-medium truncate">--hint</div>
+          <div class="text-[10px] text-[var(--text-muted)] font-mono">Hint / Purple</div>
+        </div>
+
+        <div class="color-card zen-card p-3 cursor-pointer group" data-var="--predictive" data-value="#5a6a87">
+          <div class="h-12 rounded-md mb-2 shadow-inner" style="background-color: var(--predictive);"></div>
+          <div class="text-xs font-mono font-medium truncate">--predictive</div>
+          <div class="text-[10px] text-[var(--text-muted)] font-mono">AI Ghost Text</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. TYPOGRAPHY SYSTEM -->
+    <section id="typography" class="space-y-6">
+      <div>
+        <h2 class="text-2xl font-medium tracking-tight">Typography Scale & Font Families</h2>
+        <p class="text-sm text-[var(--text-muted)] mt-1">Four distinct typography roles used across the Zed interface.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Sans Serif -->
+        <div class="zen-card space-y-3">
+          <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
+            <span class="text-xs font-mono text-[var(--text-accent)]">--font-sans</span>
+            <span class="text-xs text-[var(--text-muted)]">IBM Plex Sans / System</span>
+          </div>
+          <div class="space-y-1">
+            <div class="text-4xl font-medium tracking-tight">Display Headline 72px</div>
+            <div class="text-2xl font-medium">Section Header 24px</div>
+            <div class="text-base text-[var(--text-muted)] leading-relaxed">
+              Zed is crafted for speed and collaboration with humans and AI. Fast startup, GPU-accelerated text rendering, and low keystroke latency.
+            </div>
+          </div>
+        </div>
+
+        <!-- Monospace -->
+        <div class="zen-card space-y-3 font-mono">
+          <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
+            <span class="text-xs text-[var(--text-accent)]">--font-mono</span>
+            <span class="text-xs text-[var(--text-muted)]">Zed Mono / Lilex</span>
+          </div>
+          <div class="space-y-2 text-sm">
+            <div class="text-base text-[var(--syntax-keyword-color)]">fn calculate_fps(dt: f32) -> u32 {</div>
+            <div class="text-xs text-[var(--syntax-comment-color)]">// Zero-latency GPUI buffer refresh</div>
+            <div class="text-sm"><span class="text-[var(--syntax-function-color)]">1000.0</span> / dt</div>
+            <div class="text-sm">}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. COMPONENT SHOWCASE -->
+    <section id="components" class="space-y-8">
+      <div>
+        <h2 class="text-2xl font-medium tracking-tight">Component Library</h2>
+        <p class="text-sm text-[var(--text-muted)] mt-1">Drop-in interactive components with built-in hover and active states.</p>
+      </div>
+
+      <!-- Buttons & Hotkeys -->
+      <div class="zen-card space-y-6">
+        <h3 class="text-base font-medium">Buttons & Shortcut Indicators</h3>
+        
+        <div class="flex flex-wrap items-center gap-4">
+          <!-- Primary -->
+          <button class="zen-btn zen-btn-primary">
+            <span>Primary Action</span>
+            <kbd class="zen-kbd">↵</kbd>
+          </button>
+
+          <!-- Accent Glow -->
+          <button class="zen-btn zen-btn-accent">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            <span>Zed AI Assistant</span>
+          </button>
+
+          <!-- Secondary -->
+          <button class="zen-btn zen-btn-secondary">
+            <span>Secondary</span>
+            <kbd class="zen-kbd">D</kbd>
+          </button>
+
+          <!-- Ghost -->
+          <button class="zen-btn zen-btn-ghost">
+            <i data-lucide="github" class="w-4 h-4"></i>
+            <span>Clone Source</span>
+            <kbd class="zen-kbd">C</kbd>
+          </button>
+
+          <!-- Outline -->
+          <button class="zen-btn zen-btn-outline">
+            <span>Outline Button</span>
+          </button>
+
+          <!-- Small -->
+          <button class="zen-btn zen-btn-secondary zen-btn-sm">
+            <span>Compact</span>
+            <kbd class="zen-kbd">esc</kbd>
+          </button>
+        </div>
+
+        <!-- Badges & Pills -->
+        <h3 class="text-base font-medium pt-4 border-t border-[var(--border)]">Badges & Tags</h3>
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="zen-badge">Normal Badge</span>
+          <span class="zen-badge zen-badge-accent">
+            <span class="w-1.5 h-1.5 rounded-full bg-[var(--text-accent)] animate-pulse"></span>
+            Public Beta
+          </span>
+          <span class="zen-badge zen-badge-success">
+            <i data-lucide="check" class="w-3 h-3"></i>
+            100% Rust
+          </span>
+          <span class="zen-badge zen-badge-warning">
+            <i data-lucide="alert-triangle" class="w-3 h-3"></i>
+            Diagnostic Warning
+          </span>
+          <span class="zen-badge font-mono text-[11px]">
+            <i data-lucide="cpu" class="w-3 h-3"></i>
+            GPUI Multi-Core
+          </span>
+        </div>
+
+        <!-- Form Controls -->
+        <h3 class="text-base font-medium pt-4 border-t border-[var(--border)]">Form Controls & Inputs</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl">
+          <div>
+            <label class="block text-xs font-mono text-[var(--text-muted)] mb-1">Search Extensions</label>
+            <div class="relative">
+              <i data-lucide="search" class="w-4 h-4 absolute left-3 top-2.5 text-[var(--text-muted)]"></i>
+              <input type="text" class="zen-input pl-9" placeholder="Search language servers...">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-[var(--text-muted)] mb-1">Select Model</label>
+            <select class="zen-input">
+              <option>Claude 3.5 Sonnet</option>
+              <option>GPT-4o (OpenAI)</option>
+              <option>Zeta2 (Open Weights)</option>
+              <option>Ollama Local LLM</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-[var(--text-muted)] mb-1">Branch / Target</label>
+            <input type="text" class="zen-input font-mono text-xs" value="main (HEAD)">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. CODE EDITOR DEMO & SYNTAX TOKENS -->
+    <section id="editor" class="space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-medium tracking-tight">Interactive Editor Window</h2>
+          <p class="text-sm text-[var(--text-muted)] mt-1">Live demo showing Zed's exact syntax tokens, tab switcher, and diagnostic squiggles.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="editor-lang-rs" class="zen-btn zen-btn-secondary zen-btn-sm active-lang font-mono">Rust</button>
+          <button id="editor-lang-ts" class="zen-btn zen-btn-ghost zen-btn-sm font-mono">TypeScript</button>
+          <button id="editor-lang-py" class="zen-btn zen-btn-ghost zen-btn-sm font-mono">Python</button>
+        </div>
+      </div>
+
+      <!-- Editor Window -->
+      <div class="zen-editor-window">
+        <!-- Titlebar -->
+        <div class="zen-editor-titlebar">
+          <div class="zen-traffic-lights">
+            <span class="zen-light-close"></span>
+            <span class="zen-light-minimize"></span>
+            <span class="zen-light-maximize"></span>
+          </div>
+          <div id="editor-file-path" class="text-xs text-[var(--text-muted)] font-mono">src/platform/gpui.rs</div>
+          <div class="text-xs text-[var(--text-muted)] font-mono">Zed 0.180.2</div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="zen-editor-tabs">
+          <div id="tab-1" class="zen-editor-tab active">
+            <i data-lucide="file-code" class="w-3.5 h-3.5 text-[var(--text-accent)]"></i>
+            <span id="tab-1-name">gpui.rs</span>
+          </div>
+          <div id="tab-2" class="zen-editor-tab">
+            <i data-lucide="file" class="w-3.5 h-3.5 text-[var(--text-muted)]"></i>
+            <span id="tab-2-name">scheduler.tsx</span>
+          </div>
+          <div id="tab-3" class="zen-editor-tab">
+            <i data-lucide="file-text" class="w-3.5 h-3.5 text-[var(--text-muted)]"></i>
+            <span id="tab-3-name">Cargo.toml</span>
+          </div>
+        </div>
+
+        <!-- Code Area -->
+        <div class="zen-editor-body">
+          <!-- Gutter -->
+          <div id="editor-gutter" class="zen-editor-gutter">
+            <div>1</div>
+            <div>2</div>
+            <div class="active-line">3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+            <div>10</div>
+            <div>11</div>
+            <div>12</div>
+          </div>
+
+          <!-- Code Content -->
+          <div id="editor-code" class="zen-editor-code font-mono text-sm leading-relaxed">
+<div><span class="syntax-keyword">use</span> gpui::<span class="syntax-type">WindowContext</span>;</div>
+<div><span class="syntax-keyword">use</span> crate::element::<span class="syntax-type">InteractiveElement</span>;</div>
+<div class="bg-[var(--editor-active_line-background)] -mx-5 px-5"><span class="syntax-keyword">pub struct</span> <span class="syntax-type">EditorView</span> {</div>
+<div>    <span class="syntax-prop">buffer_id</span>: <span class="syntax-type">u64</span>,</div>
+<div>    <span class="syntax-prop">cursor_pos</span>: (<span class="syntax-type">usize</span>, <span class="syntax-type">usize</span>),</div>
+<div>}</div>
+<div></div>
+<div><span class="syntax-keyword">impl</span> <span class="syntax-type">EditorView</span> {</div>
+<div>    <span class="syntax-keyword">pub fn</span> <span class="syntax-fn">paint</span>(&<span class="syntax-keyword">mut</span> <span class="syntax-var">self</span>, <span class="syntax-var">cx</span>: &<span class="syntax-keyword">mut</span> <span class="syntax-type">WindowContext</span>) {</div>
+<div>        <span class="syntax-comment">// Fast GPU rasterization loop</span></div>
+<div>        <span class="syntax-var">cx</span>.<span class="syntax-fn">draw_glyphs</span>(<span class="syntax-str">"Instant keystroke response"</span>);</div>
+<div>    }</div>
+<div>}</div>
+          </div>
+        </div>
+
+        <!-- Statusbar -->
+        <div class="zen-editor-statusbar">
+          <div class="flex items-center gap-4">
+            <span class="flex items-center gap-1.5 text-xs text-[var(--text-accent)]">
+              <i data-lucide="git-branch" class="w-3.5 h-3.5"></i>
+              <span>main</span>
+            </span>
+            <span class="flex items-center gap-1 text-xs text-emerald-400">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+              <span>0 errors</span>
+            </span>
+          </div>
+          <div class="flex items-center gap-4 text-xs font-mono">
+            <span>Ln 3, Col 12</span>
+            <span>UTF-8</span>
+            <span id="editor-lang-indicator">Rust</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. MULTIPLAYER CURSORS & TERMINAL ANSI -->
+    <section id="multiplayer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Multiplayer 8-Player Palette -->
+      <div class="zen-card space-y-4">
+        <div>
+          <h3 class="text-base font-medium">Multiplayer Collaborator Cursors</h3>
+          <p class="text-xs text-[var(--text-muted)] mt-0.5">8 distinct colors allocated for real-time team collaboration.</p>
+        </div>
+
+        <div class="grid grid-cols-4 gap-2">
+          <div class="p-2.5 rounded border border-[var(--border)] bg-[var(--element-background)] flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full" style="background-color: var(--players-0-cursor);"></span>
+            <span class="text-xs font-mono">Player 0</span>
+          </div>
+          <div class="p-2.5 rounded border border-[var(--border)] bg-[var(--element-background)] flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full" style="background-color: var(--players-1-cursor);"></span>
+            <span class="text-xs font-mono">Player 1</span>
+          </div>
+          <div class="p-2.5 rounded border border-[var(--border)] bg-[var(--element-background)] flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full" style="background-color: var(--players-2-cursor);"></span>
+            <span class="text-xs font-mono">Player 2</span>
+          </div>
+          <div class="p-2.5 rounded border border-[var(--border)] bg-[var(--element-background)] flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full" style="background-color: var(--players-3-cursor);"></span>
+            <span class="text-xs font-mono">Player 3</span>
+          </div>
+          <div class="p-2.5 rounded border border-[var(--border)] bg-[var(--element-background)] flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full" style="background-color: var(--players-4-cursor);"></span>
+            <span class="text-xs font-mono">Player 4</span>
+          </div>
+          <div class="p-2.5 rounded border border-[var(--border)] bg-[var(--element-background)] flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full" style="background-color: var(--players-5-cursor);"></span>
+            <span class="text-xs font-mono">Player 5</span>
+          </div>
+          <div class="p-2.5 rounded border border-[var(--border)] bg-[var(--element-background)] flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full" style="background-color: var(--players-6-cursor);"></span>
+            <span class="text-xs font-mono">Player 6</span>
+          </div>
+          <div class="p-2.5 rounded border border-[var(--border)] bg-[var(--element-background)] flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full" style="background-color: var(--players-7-cursor);"></span>
+            <span class="text-xs font-mono">Player 7</span>
+          </div>
+        </div>
+
+        <!-- Live Cursor Demo Box -->
+        <div class="p-4 rounded-lg bg-[var(--editor-background)] border border-[var(--border)] font-mono text-sm leading-relaxed relative overflow-hidden">
+          <div><span class="syntax-keyword">const</span> <span class="syntax-var">collabSession</span> = <span class="syntax-fn">join_room</span>(<span class="syntax-str">"core-dev"</span>);</div>
+          <div class="mt-1">
+            <span class="syntax-comment">// Simultaneous live editing demo:</span>
+          </div>
+          <div class="mt-2">
+            <span class="syntax-keyword">let</span> <span class="syntax-var">latency</span> = 
+            <span class="inline-block relative">
+              <span class="text-[var(--syntax-number-color)]">1.2ms</span>
+              <span class="zen-cursor" style="background-color: var(--players-0-cursor);">
+                <span class="zen-cursor-tag" style="background-color: var(--players-0-cursor);">José (Elixir)</span>
+              </span>
+            </span>;
+          </div>
+          <div class="mt-2">
+            <span class="syntax-keyword">let</span> <span class="syntax-var">author</span> = 
+            <span class="inline-block relative">
+              <span class="text-[var(--syntax-string-color)]">"Dan A."</span>
+              <span class="zen-cursor" style="background-color: var(--players-2-cursor);">
+                <span class="zen-cursor-tag" style="background-color: var(--players-2-cursor);">Dan (React)</span>
+              </span>
+            </span>;
+          </div>
+        </div>
+      </div>
+
+      <!-- Terminal 16-Color ANSI Demo -->
+      <div class="zen-card space-y-4">
+        <div>
+          <h3 class="text-base font-medium">Terminal ANSI Color Matrix</h3>
+          <p class="text-xs text-[var(--text-muted)] mt-0.5">Zed's built-in terminal color palette.</p>
+        </div>
+
+        <div class="grid grid-cols-4 gap-2 text-xs font-mono text-center">
+          <div class="p-2 rounded text-white" style="background-color: var(--terminal-ansi-red);">Red</div>
+          <div class="p-2 rounded text-white" style="background-color: var(--terminal-ansi-green);">Green</div>
+          <div class="p-2 rounded text-black font-semibold" style="background-color: var(--terminal-ansi-yellow);">Yellow</div>
+          <div class="p-2 rounded text-white" style="background-color: var(--terminal-ansi-blue);">Blue</div>
+          <div class="p-2 rounded text-white" style="background-color: var(--terminal-ansi-magenta);">Magenta</div>
+          <div class="p-2 rounded text-white" style="background-color: var(--terminal-ansi-cyan);">Cyan</div>
+          <div class="p-2 rounded text-black font-semibold" style="background-color: var(--terminal-ansi-white);">White</div>
+          <div class="p-2 rounded text-white" style="background-color: var(--terminal-ansi-bright_black);">Black</div>
+        </div>
+
+        <div class="p-3 rounded-lg bg-[var(--terminal-background)] border border-[var(--border)] font-mono text-xs text-[var(--terminal-foreground)] space-y-1">
+          <div><span style="color: var(--terminal-ansi-green);">acer@workstation</span>:<span style="color: var(--terminal-ansi-blue);">~/dupeZenLandingPage</span>$ cargo run --release</div>
+          <div style="color: var(--terminal-ansi-yellow);">   Compiling</div>
+          <div style="color: var(--terminal-ansi-cyan);">    Finished</div> release [optimized] target(s) in 0.42s
+          <div style="color: var(--terminal-ansi-green);">     Running</div> `target/release/zed`
+          <div class="text-[var(--text-muted)]">[GPUI] Render engine initialized with Metal / Vulkan GPU pipeline</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-[var(--border)] py-8 mt-16 bg-[var(--surface-background)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--text-muted)] font-mono">
+      <div>Zed Design System • Built with care for high-speed developers</div>
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="hover:text-[var(--text)] transition-colors">Landing Page</a>
+        <a href="./design-system/README.md" class="hover:text-[var(--text)] transition-colors">Documentation</a>
+        <a href="https://zed.dev" target="_blank" class="hover:text-[var(--text)] transition-colors">Official Zed</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

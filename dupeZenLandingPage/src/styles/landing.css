@@ -1,0 +1,58 @@
+/**
+ * Landing Page Custom Styling & Keyframes
+ */
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Pulse animation for live indicators */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Code editor glow effect */
+.zen-editor-window {
+  position: relative;
+}
+
+.zen-editor-window::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius-xl);
+  padding: 1px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 40%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Feature tab active indicator */
+.feature-tab.active {
+  background-color: var(--element-active);
+  color: var(--text);
+  border-color: var(--border-focused);
+}
+
+/* Benchmark metric buttons */
+.active-metric {
+  background-color: var(--element-active) !important;
+  color: var(--text) !important;
+}
+
+/* Active language button in editor showcase */
+.active-hero-tab {
+  background-color: var(--tab-active_background) !important;
+  color: var(--text) !important;
+  border-top: 2px solid var(--text-accent) !important;
+}
+

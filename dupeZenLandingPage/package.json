@@ -1,0 +1,25 @@
+{
+  "name": "dupe-zen-landing-page",
+  "version": "1.0.0",
+  "description": "High-fidelity Zed landing page replica and standalone design system",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "zed",
+    "design-system",
+    "editor",
+    "landing-page",
+    "tailwind",
+    "tokens"
+  ],
+  "author": "Antigravity",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}
+
