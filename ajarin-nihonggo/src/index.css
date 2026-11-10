@@ -1,0 +1,47 @@
+@import './design-system/tokens.css';
+@import './design-system/components.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('/fonts/IBMPlexSans_Regular-s.p.2e_-c_m03txvi.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lilex';
+  src: url('/fonts/Lilex_Regular-s.p.3xqaro8f5m-dk.woff2') format('woff2');
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Custom 3D Flashcard Flip */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Custom Japanese Kana typography crispness */
+.kana-display {
+  font-family: "Hiragino Sans", "Meiryo", "Noto Sans JP", sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
